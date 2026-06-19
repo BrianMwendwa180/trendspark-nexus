@@ -15,40 +15,37 @@ export function TrendCard({ trend, index = 0 }: { trend: Trend; index?: number }
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex items-center gap-2">
-            <span className="text-xl">{trend.emoji}</span>
             <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-              {trend.category}
+              {trend.source}
             </span>
           </div>
           <h3 className="font-display text-lg font-semibold leading-snug tracking-tight">
-            {trend.title}
+            {trend.trend_name}
           </h3>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {trend.platforms.map((p) => (
-              <PlatformBadge key={p} p={p} />
-            ))}
-          </div>
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="inline-flex items-center gap-1 rounded-md bg-success/15 px-2 py-1 font-mono text-xs text-success">
-            <TrendingUp className="h-3 w-3" />+{trend.growth}%
+          <span className={`inline-flex items-center gap-1 rounded-md px-2 py-1 font-mono text-xs ${
+            trend.urgency === 'High' ? 'bg-destructive/15 text-destructive' : 
+            trend.urgency === 'Medium' ? 'bg-accent/15 text-accent' : 
+            'bg-success/15 text-success'
+          }`}>
+            <TrendingUp className="h-3 w-3" /> {trend.urgency}
           </span>
-          <span className="font-mono text-[10px] text-muted-foreground">{trend.detectedAt}</span>
+          <span className="font-mono text-[10px] text-muted-foreground">{new Date(trend.detectedAt).toLocaleDateString()}</span>
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-4">
-        <Stat
-          icon={<Sparkles className="h-3 w-3" />}
-          label="Virality"
-          value={`${trend.virality}`}
-        />
+      <div className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4">
         <Stat
           icon={<Target className="h-3 w-3" />}
-          label="Relevance"
-          value={`${trend.relevance}%`}
+          label="Traffic Velocity"
+          value={`${trend.traffic_velocity}`}
         />
-        <Stat icon={<Clock className="h-3 w-3" />} label="Life" value={`${trend.lifeDays}d`} />
+        <Stat 
+          icon={<Clock className="h-3 w-3" />} 
+          label="Generated?" 
+          value={trend.is_generated ? "Yes" : "No"} 
+        />
       </div>
 
       <div className="mt-4 flex items-center gap-2">

@@ -19,3 +19,21 @@ export async function getBrief(id: string): Promise<Trend> {
   if (!res.ok) throw new Error('Failed to fetch brief');
   return res.json();
 }
+
+export async function generateBriefAPI(id: string): Promise<Trend> {
+  const res = await fetch(`${API_URL}/trends/${id}/generate`, {
+    method: 'POST',
+  });
+  if (!res.ok) throw new Error('Failed to generate brief');
+  const data = await res.json();
+  // We can fetch the updated brief or return data.brief, but let's just return the trend structure
+  return getBrief(id);
+}
+
+export async function triggerIngestion(): Promise<any> {
+  const res = await fetch(`${API_URL}/trends/ingest`, {
+    method: 'POST',
+  });
+  if (!res.ok) throw new Error('Failed to ingest trends');
+  return res.json();
+}

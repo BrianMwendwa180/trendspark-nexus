@@ -7,8 +7,9 @@ import { TrendCard } from "@/components/dashboard/TrendCard";
 import { GrowthChart } from "@/components/charts/GrowthChart";
 import { PageHeader } from "@/components/ui-bits/PageHeader";
 import { useQuery } from "@tanstack/react-query";
-import { getTrends } from "@/lib/api";
+import { getTrends, triggerIngestion } from "@/lib/api";
 import { metrics, activity } from "@/lib/mock-data";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,10 +25,21 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const { data: trends = [], isLoading } = useQuery({
+  const { data: trends = [], isLoading, refetch } = useQuery({
     queryKey: ["trends"],
     queryFn: getTrends,
   });
+
+  const handleIngest = async () => {
+    toast.promise(triggerIngestion(), {
+      loading: 'Running AI Ingestion...',
+      success: (data) => {
+        refetch();
+        return `Ingested ${data.added.reddit} from Reddit and ${data.added.google} from Google.`;
+      },
+      error: 'Ingestion failed',
+    });
+  };
 
   if (isLoading || trends.length === 0) {
     return (
@@ -41,6 +53,7 @@ function Dashboard() {
 
   return (
     <AppShell>
+      <Toaster />
       {/* Hero banner */}
       <motion.section
         initial={{ opacity: 0, y: 12 }}
@@ -52,13 +65,13 @@ function Dashboard() {
         <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">
-              <span className="live-pulse-dot" /> Live · {trends[0].detectedAt}
+              <span className="live-pulse-dot" /> Live · {new Date(trends[0].detectedAt).toLocaleDateString()}
             </div>
             <h1 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              <span className="text-primary">{trends[0].title}</span>
+              <span className="text-primary">{trends[0].trend_name}</span>
             </h1>
-            <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
-              {trends[0].summary}
+            <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base line-clamp-3">
+              {trends[0].description || "No description provided."}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <Link
@@ -78,12 +91,11 @@ function Dashboard() {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3 rounded-xl border border-border bg-card/60 p-4 backdrop-blur">
-            <Quick label="Virality" value={`${trends[0].virality}`} />
-            <Quick label="Growth" value={`+${trends[0].growth}%`} accent />
-            <Quick label="Life" value={`${trends[0].lifeDays}d`} />
+            <Quick label="Velocity" value={`${trends[0].traffic_velocity}`} />
+            <Quick label="Urgency" value={`${trends[0].urgency}`} accent={trends[0].urgency === 'High'} />
+            <Quick label="Status" value={trends[0].is_generated ? "Brief Ready" : "Raw Trend"} />
             <div className="col-span-3 mt-1 border-t border-border pt-3 text-[11px] text-muted-foreground">
-              Detected across {trends[0].platforms.length} platforms ·{" "}
-              <span className="font-mono">{trends[0].engagement.toLocaleString()}</span> engagements
+              Source: {trends[0].source}
             </div>
           </div>
         </div>
@@ -154,8 +166,8 @@ function Dashboard() {
               <button className="inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-3 py-2 text-xs hover:border-primary/40">
                 <Filter className="h-3.5 w-3.5" /> Filter
               </button>
-              <button className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90">
-                <Plus className="h-3.5 w-3.5" /> New hunt
+              <button onClick={handleIngest} className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90">
+                <Plus className="h-3.5 w-3.5" /> Run AI Ingestion
               </button>
             </>
           }

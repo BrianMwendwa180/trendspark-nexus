@@ -5,7 +5,8 @@ import { ChevronDown, Copy, Download, Share2, FileText, ArrowLeft, Sparkles } fr
 import toast, { Toaster } from "react-hot-toast";
 import { AppShell } from "@/components/layout/AppShell";
 import { PlatformBadge } from "@/components/dashboard/PlatformBadge";
-import { getBrief } from "@/lib/api";
+import { getBrief, generateBriefAPI } from "@/lib/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/briefs/$id")({
   loader: async ({ params }) => {
@@ -37,14 +38,31 @@ export const Route = createFileRoute("/briefs/$id")({
 
 function BriefPage() {
   const { trend } = Route.useLoaderData();
+  const queryClient = useQueryClient();
 
-  const sections = [
-    { key: "why", label: "Why is it trending?", body: trend.why, tone: "Insight" },
-    { key: "angle", label: "Entrepreneurship angle", body: trend.angle, tone: "Strategy" },
-    { key: "hook", label: "Hook", body: trend.hook, tone: "Open" },
-    { key: "script", label: "60-second script", body: trend.script, tone: "Body" },
-    { key: "cta", label: "Call to action", body: trend.cta, tone: "Close" },
-  ];
+  const generateMutation = useMutation({
+    mutationFn: () => generateBriefAPI(trend.id),
+    onSuccess: (newTrend) => {
+      queryClient.setQueryData(["trends"], (old: any) => {
+        if (!old) return old;
+        return old.map((t: any) => t.id === newTrend.id ? newTrend : t);
+      });
+      // Force reload or invalidate to update loader data?
+      // Since it's a router loader, we can just let React update or do window.location.reload()
+      // But a better way in Tanstack Router is router.invalidate()
+      window.location.reload(); 
+    },
+    onError: (err) => {
+      toast.error("Failed to generate brief: " + err.message);
+    }
+  });
+
+  const sections = trend.is_generated && trend.generated_brief ? [
+    { key: "hook", label: "Hook", body: trend.generated_brief.hook, tone: "Open" },
+    { key: "angle", label: "Entrepreneurship angle", body: trend.generated_brief.angle, tone: "Strategy" },
+    { key: "script", label: "45-second script", body: trend.generated_brief.script, tone: "Body" },
+    { key: "remix", label: "Remix template", body: trend.generated_brief.remix_template, tone: "Action" },
+  ] : [];
 
   return (
     <AppShell>
@@ -68,19 +86,14 @@ function BriefPage() {
       <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
         <div>
           <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            <FileText className="h-3 w-3" /> Brief · {trend.category}
+            <FileText className="h-3 w-3" /> Brief · {trend.source}
           </div>
           <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            {trend.emoji} {trend.title}
+            {trend.trend_name}
           </h1>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {trend.platforms.map((p: any) => (
-              <PlatformBadge key={p} p={p} />
-            ))}
-          </div>
 
           <div className="mt-6 space-y-3">
-            {sections.map((s, i) => (
+            {trend.is_generated ? sections.map((s, i) => (
               <Collapsible
                 key={s.key}
                 title={s.label}
@@ -88,18 +101,34 @@ function BriefPage() {
                 body={s.body}
                 defaultOpen={i < 2}
               />
-            ))}
+            )) : (
+              <div className="py-12 text-center border border-dashed border-border rounded-2xl bg-card/50">
+                <Sparkles className="w-8 h-8 mx-auto mb-4 text-primary opacity-50" />
+                <h3 className="font-display text-lg font-semibold mb-2">No brief generated yet</h3>
+                <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
+                  Use the Kuzana AI engine to analyze this trend and generate a ready-to-shoot business script.
+                </p>
+                <button 
+                  onClick={() => generateMutation.mutate()}
+                  disabled={generateMutation.isPending}
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+                >
+                  <Sparkles className="w-4 h-4" /> 
+                  {generateMutation.isPending ? "Generating..." : "Generate Script Brief"}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         <aside className="space-y-4">
           <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
             <div className="mb-2 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-primary">
-              <Sparkles className="h-3 w-3" /> AI confidence
+              <Sparkles className="h-3 w-3" /> Traffic Velocity
             </div>
-            <div className="font-mono text-4xl font-bold">{trend.virality}%</div>
+            <div className="font-mono text-4xl font-bold">{trend.traffic_velocity}</div>
             <p className="mt-2 text-xs text-muted-foreground">
-              Predicted to outperform your last 30 posts by 3.2x in the next {trend.lifeDays} days.
+              Urgency: {trend.urgency}
             </p>
           </div>
 

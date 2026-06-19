@@ -42,17 +42,17 @@ function BriefsIndex() {
             className="group rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40"
           >
             <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-              <FileText className="h-3 w-3" /> Brief · {t.category}
+              <FileText className="h-3 w-3" /> {t.is_generated ? "Brief Ready" : "Trend Raw"} · {t.source}
             </div>
             <h3 className="font-display text-lg font-semibold leading-snug">
-              {t.emoji} {t.title}
+              {t.trend_name}
             </h3>
-            <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{t.hook}</p>
+            <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{t.is_generated ? t.generated_brief?.hook : t.description}</p>
             <div className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-primary">
               <Sparkles className="h-3.5 w-3.5" /> Open brief →
             </div>
           </Link>
-        ))}
+        )))}
       </div>
     </AppShell>
   );

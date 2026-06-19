@@ -53,30 +53,32 @@ function Saved() {
             >
               <div className={`relative ${sizes[i % sizes.length]} bg-primary/5 p-5`}>
                 <div className="relative flex h-full flex-col justify-between">
-                  <span className="text-4xl">{t.emoji}</span>
+                  <span className="text-4xl">🎯</span>
                   <div>
-                    <div className="mb-1 inline-flex items-center gap-1 rounded-full bg-background/60 px-2 py-0.5 font-mono text-[10px] text-success backdrop-blur">
-                      +{t.growth}% growth
+                    <div className={`mb-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[10px] backdrop-blur ${
+                      t.urgency === 'High' ? 'bg-destructive/15 text-destructive' : 
+                      t.urgency === 'Medium' ? 'bg-accent/15 text-accent' : 
+                      'bg-success/15 text-success'
+                    }`}>
+                      {t.urgency} Urgency
                     </div>
                     <h3 className="font-display text-lg font-semibold leading-tight drop-shadow">
-                      {t.title}
+                      {t.trend_name}
                     </h3>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between gap-2 border-t border-border p-3">
-                <div className="flex flex-wrap gap-1">
-                  {t.platforms.slice(0, 2).map((p) => (
-                    <PlatformBadge key={p} p={p} />
-                  ))}
+                <div className="flex flex-wrap gap-1 font-mono text-[10px] uppercase text-muted-foreground">
+                  {t.source}
                 </div>
                 <span className="inline-flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
-                  <Bookmark className="h-3 w-3" /> Saved {t.detectedAt}
+                  <Bookmark className="h-3 w-3" /> {new Date(t.detectedAt).toLocaleDateString()}
                 </span>
               </div>
             </Link>
           </motion.div>
-        ))}
+        )))}
       </div>
     </AppShell>
   );
