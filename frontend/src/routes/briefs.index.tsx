@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Sparkles, FileText } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/ui-bits/PageHeader";
-import { trends } from "@/lib/mock-data";
+import { useQuery } from "@tanstack/react-query";
+import { getTrends } from "@/lib/api";
 
 export const Route = createFileRoute("/briefs/")({
   head: () => ({
@@ -15,6 +16,11 @@ export const Route = createFileRoute("/briefs/")({
 });
 
 function BriefsIndex() {
+  const { data: trends = [], isLoading } = useQuery({
+    queryKey: ["trends"],
+    queryFn: getTrends,
+  });
+
   return (
     <AppShell>
       <PageHeader
@@ -23,7 +29,12 @@ function BriefsIndex() {
         description="One-click, publish-ready briefs for every active trend."
       />
       <div className="grid gap-4 md:grid-cols-2">
-        {trends.map((t) => (
+        {isLoading ? (
+          <div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            Loading briefs...
+          </div>
+        ) : (
+          trends.map((t) => (
           <Link
             key={t.id}
             to="/briefs/$id"

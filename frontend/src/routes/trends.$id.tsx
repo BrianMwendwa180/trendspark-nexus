@@ -11,13 +11,19 @@ import {
 } from "recharts";
 import { AppShell } from "@/components/layout/AppShell";
 import { PlatformBadge } from "@/components/dashboard/PlatformBadge";
-import { trends } from "@/lib/mock-data";
+import { getTrend, getTrends } from "@/lib/api";
 
 export const Route = createFileRoute("/trends/$id")({
-  loader: ({ params }) => {
-    const trend = trends.find((t) => t.id === params.id);
-    if (!trend) throw notFound();
-    return { trend };
+  loader: async ({ params }) => {
+    try {
+      const [trend, allTrends] = await Promise.all([
+        getTrend(params.id),
+        getTrends()
+      ]);
+      return { trend, allTrends };
+    } catch (err) {
+      throw notFound();
+    }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -39,7 +45,7 @@ export const Route = createFileRoute("/trends/$id")({
 });
 
 function TrendDetail() {
-  const { trend } = Route.useLoaderData();
+  const { trend, allTrends } = Route.useLoaderData();
   return (
     <AppShell>
       <Link
@@ -167,7 +173,7 @@ function TrendDetail() {
               Related signals
             </h3>
             <ul className="space-y-2 text-sm">
-              {trends
+              {allTrends
                 .filter((t) => t.id !== trend.id)
                 .slice(0, 3)
                 .map((t) => (

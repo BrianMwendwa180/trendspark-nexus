@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Bookmark } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/ui-bits/PageHeader";
-import { trends } from "@/lib/mock-data";
+import { useQuery } from "@tanstack/react-query";
+import { getTrends } from "@/lib/api";
 import { PlatformBadge } from "@/components/dashboard/PlatformBadge";
 
 export const Route = createFileRoute("/saved/")({
@@ -19,6 +20,11 @@ export const Route = createFileRoute("/saved/")({
 const sizes = ["h-44", "h-56", "h-40", "h-60", "h-48", "h-52"];
 
 function Saved() {
+  const { data: trends = [], isLoading } = useQuery({
+    queryKey: ["trends"],
+    queryFn: getTrends,
+  });
+
   return (
     <AppShell>
       <PageHeader
@@ -27,7 +33,12 @@ function Saved() {
         description="Everything you've pinned. Drag, share or generate a brief in one click."
       />
       <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-        {trends.map((t, i) => (
+        {isLoading ? (
+          <div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            Loading saved trends...
+          </div>
+        ) : (
+          trends.map((t, i) => (
           <motion.div
             key={t.id}
             initial={{ opacity: 0, y: 8 }}
