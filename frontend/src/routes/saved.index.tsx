@@ -40,9 +40,7 @@ function Saved() {
               params={{ id: t.id }}
               className="group block overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-primary/40"
             >
-              <div
-                className={`relative ${sizes[i % sizes.length]} bg-primary/5 p-5`}
-              >
+              <div className={`relative ${sizes[i % sizes.length]} bg-primary/5 p-5`}>
                 <div className="relative flex h-full flex-col justify-between">
                   <span className="text-4xl">{t.emoji}</span>
                   <div>

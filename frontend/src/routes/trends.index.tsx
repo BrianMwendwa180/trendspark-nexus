@@ -9,7 +9,10 @@ export const Route = createFileRoute("/trends/")({
   head: () => ({
     meta: [
       { title: "Live Trends · TrendJack Hunter" },
-      { name: "description", content: "Real-time trends across Twitter, TikTok, YouTube and Reddit." },
+      {
+        name: "description",
+        content: "Real-time trends across Twitter, TikTok, YouTube and Reddit.",
+      },
     ],
   }),
   component: TrendsPage,
@@ -39,20 +42,26 @@ function TrendsPage() {
       />
 
       <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
-        {["All", "Tech & Work", "Entrepreneurship", "Culture", "Consumer AI", "Business", "Finance"].map(
-          (c, i) => (
-            <button
-              key={c}
-              className={`shrink-0 rounded-full border px-3 py-1 text-xs ${
-                i === 0
-                  ? "border-primary/60 bg-primary/15 text-primary"
-                  : "border-border bg-surface text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {c}
-            </button>
-          ),
-        )}
+        {[
+          "All",
+          "Tech & Work",
+          "Entrepreneurship",
+          "Culture",
+          "Consumer AI",
+          "Business",
+          "Finance",
+        ].map((c, i) => (
+          <button
+            key={c}
+            className={`shrink-0 rounded-full border px-3 py-1 text-xs ${
+              i === 0
+                ? "border-primary/60 bg-primary/15 text-primary"
+                : "border-border bg-surface text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

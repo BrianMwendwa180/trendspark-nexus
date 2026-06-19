@@ -1,4 +1,12 @@
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { growthSeries } from "@/lib/mock-data";
 
 export function GrowthChart() {
@@ -19,12 +27,20 @@ export function GrowthChart() {
           <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey="t"
-            tick={{ fill: "var(--color-muted-foreground)", fontSize: 11, fontFamily: "var(--font-mono)" }}
+            tick={{
+              fill: "var(--color-muted-foreground)",
+              fontSize: 11,
+              fontFamily: "var(--font-mono)",
+            }}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            tick={{ fill: "var(--color-muted-foreground)", fontSize: 11, fontFamily: "var(--font-mono)" }}
+            tick={{
+              fill: "var(--color-muted-foreground)",
+              fontSize: 11,
+              fontFamily: "var(--font-mono)",
+            }}
             tickLine={false}
             axisLine={false}
           />

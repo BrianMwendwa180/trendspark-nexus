@@ -24,7 +24,10 @@ function Settings() {
 
   return (
     <AppShell>
-      <PageHeader title="Settings" description="Tune your workspace, sources and brief preferences." />
+      <PageHeader
+        title="Settings"
+        description="Tune your workspace, sources and brief preferences."
+      />
 
       <div className="grid gap-6 lg:grid-cols-[200px_1fr]">
         <nav className="flex gap-2 overflow-x-auto lg:flex-col">
@@ -54,9 +57,11 @@ function Settings() {
           )}
           {tab === "sources" && (
             <Panel title="Connected sources">
-              {["Twitter / X", "TikTok", "YouTube", "Reddit", "Instagram", "LinkedIn"].map((s, i) => (
-                <Toggle key={s} label={s} defaultOn={i < 4} />
-              ))}
+              {["Twitter / X", "TikTok", "YouTube", "Reddit", "Instagram", "LinkedIn"].map(
+                (s, i) => (
+                  <Toggle key={s} label={s} defaultOn={i < 4} />
+                ),
+              )}
             </Panel>
           )}
           {tab === "notifications" && (
@@ -70,7 +75,9 @@ function Settings() {
           {tab === "billing" && (
             <Panel title="Billing">
               <div className="rounded-xl border border-primary/40 bg-primary/10 p-4">
-                <div className="font-mono text-[10px] uppercase tracking-wider text-primary">Current plan</div>
+                <div className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                  Current plan
+                </div>
                 <div className="mt-1 font-display text-xl font-bold">Pro · $49/mo</div>
                 <p className="mt-2 text-xs text-muted-foreground">
                   Unlimited briefs, 24 sources, real-time alerts.
@@ -97,7 +104,9 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 function Field({ label, value, textarea }: { label: string; value: string; textarea?: boolean }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       {textarea ? (
         <textarea
           defaultValue={value}

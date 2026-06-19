@@ -16,7 +16,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NotificationsDrawer } from "./NotificationsDrawer";
 import { ThemeToggle } from "../ui/theme-toggle";
 
-
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/trends", label: "Live Trends", icon: Flame },
@@ -40,7 +39,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="font-display text-sm font-bold tracking-tight">TrendJack</span>
-            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Hunter</span>
+            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              Hunter
+            </span>
           </div>
         </div>
 

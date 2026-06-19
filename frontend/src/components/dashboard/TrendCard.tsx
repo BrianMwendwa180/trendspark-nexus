@@ -38,8 +38,16 @@ export function TrendCard({ trend, index = 0 }: { trend: Trend; index?: number }
       </div>
 
       <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-4">
-        <Stat icon={<Sparkles className="h-3 w-3" />} label="Virality" value={`${trend.virality}`} />
-        <Stat icon={<Target className="h-3 w-3" />} label="Relevance" value={`${trend.relevance}%`} />
+        <Stat
+          icon={<Sparkles className="h-3 w-3" />}
+          label="Virality"
+          value={`${trend.virality}`}
+        />
+        <Stat
+          icon={<Target className="h-3 w-3" />}
+          label="Relevance"
+          value={`${trend.relevance}%`}
+        />
         <Stat icon={<Clock className="h-3 w-3" />} label="Life" value={`${trend.lifeDays}d`} />
       </div>
 

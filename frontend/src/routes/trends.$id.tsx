@@ -1,6 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Sparkles, ArrowLeft, Share2, Bookmark } from "lucide-react";
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 import { AppShell } from "@/components/layout/AppShell";
 import { PlatformBadge } from "@/components/dashboard/PlatformBadge";
 import { trends } from "@/lib/mock-data";
@@ -54,7 +62,9 @@ function TrendDetail() {
               <PlatformBadge key={p} p={p} />
             ))}
           </div>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">{trend.summary}</p>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {trend.summary}
+          </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
             <Link
@@ -86,11 +96,37 @@ function TrendDetail() {
                       <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="t" tick={{ fill: "var(--color-muted-foreground)", fontSize: 11 }} tickLine={false} axisLine={false} />
-                  <YAxis tick={{ fill: "var(--color-muted-foreground)", fontSize: 11 }} tickLine={false} axisLine={false} />
-                  <Tooltip contentStyle={{ background: "var(--color-popover)", border: "1px solid var(--color-border)", borderRadius: 8, fontSize: 12 }} />
-                  <Area type="monotone" dataKey="v" stroke="var(--color-chart-1)" strokeWidth={2} fill="url(#gTL)" />
+                  <CartesianGrid
+                    stroke="var(--color-border)"
+                    strokeDasharray="3 3"
+                    vertical={false}
+                  />
+                  <XAxis
+                    dataKey="t"
+                    tick={{ fill: "var(--color-muted-foreground)", fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: "var(--color-muted-foreground)", fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: "var(--color-popover)",
+                      border: "1px solid var(--color-border)",
+                      borderRadius: 8,
+                      fontSize: 12,
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="v"
+                    stroke="var(--color-chart-1)"
+                    strokeWidth={2}
+                    fill="url(#gTL)"
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -121,7 +157,8 @@ function TrendDetail() {
             </h3>
             <p className="text-sm leading-relaxed text-foreground/90">
               Multi-platform amplification combined with high-emotion narrative framing is driving
-              compounding engagement. Recommend acting within {trend.lifeDays} days for maximum lift.
+              compounding engagement. Recommend acting within {trend.lifeDays} days for maximum
+              lift.
             </p>
           </div>
 
@@ -130,21 +167,24 @@ function TrendDetail() {
               Related signals
             </h3>
             <ul className="space-y-2 text-sm">
-              {trends.filter((t) => t.id !== trend.id).slice(0, 3).map((t) => (
-                <li key={t.id}>
-                  <Link
-                    to="/trends/$id"
-                    params={{ id: t.id }}
-                    className="flex items-center justify-between gap-2 rounded-md p-2 hover:bg-surface"
-                  >
-                    <span className="flex min-w-0 items-center gap-2">
-                      <span>{t.emoji}</span>
-                      <span className="truncate">{t.title}</span>
-                    </span>
-                    <span className="font-mono text-[10px] text-success">+{t.growth}%</span>
-                  </Link>
-                </li>
-              ))}
+              {trends
+                .filter((t) => t.id !== trend.id)
+                .slice(0, 3)
+                .map((t) => (
+                  <li key={t.id}>
+                    <Link
+                      to="/trends/$id"
+                      params={{ id: t.id }}
+                      className="flex items-center justify-between gap-2 rounded-md p-2 hover:bg-surface"
+                    >
+                      <span className="flex min-w-0 items-center gap-2">
+                        <span>{t.emoji}</span>
+                        <span className="truncate">{t.title}</span>
+                      </span>
+                      <span className="font-mono text-[10px] text-success">+{t.growth}%</span>
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
         </aside>

@@ -45,8 +45,7 @@ export const trends: Trend[] = [
     why: "People fear AI replacing entry-level jobs, and influencer accounts are amplifying the narrative with high-engagement hot takes.",
     angle:
       "Reframe the conversation: businesses that adopt AI-augmented developers ship 3x faster — early adopters win the next 18 months.",
-    hook:
-      "Everyone is asking if AI will replace developers. They're asking the wrong question.",
+    hook: "Everyone is asking if AI will replace developers. They're asking the wrong question.",
     script:
       "Open on a recruiter ghosting a CS grad. Cut to a solo founder shipping a SaaS in a weekend with Cursor. The lesson: AI isn't replacing developers — it's replacing developers who don't use AI. Show three concrete workflows: spec → scaffold → ship. End with a CTA to download the playbook.",
     cta: "Follow Kuzana for the daily AI playbook.",
@@ -206,7 +205,12 @@ export const predictionAccuracy = Array.from({ length: 12 }, (_, i) => ({
 
 export const notifications = [
   { id: "n1", type: "trend", title: "New trend detected: 'Vibe coding'", time: "2 min ago" },
-  { id: "n2", type: "brief", title: "Brief generated for 'AI replacing junior developers'", time: "10 min ago" },
+  {
+    id: "n2",
+    type: "brief",
+    title: "Brief generated for 'AI replacing junior developers'",
+    time: "10 min ago",
+  },
   { id: "n3", type: "platform", title: "Reddit surge in r/Entrepreneur", time: "32 min ago" },
   { id: "n4", type: "trend", title: "Viral spike: 'Ozempic economy'", time: "1 h ago" },
   { id: "n5", type: "system", title: "Weekly digest is ready", time: "3 h ago" },
@@ -214,7 +218,13 @@ export const notifications = [
 
 export const activity = [
   { id: "a1", who: "You", what: "saved", target: "AI replacing junior devs", time: "2m" },
-  { id: "a2", who: "Kuzana AI", what: "generated brief for", target: "Hustle culture backlash", time: "14m" },
+  {
+    id: "a2",
+    who: "Kuzana AI",
+    what: "generated brief for",
+    target: "Hustle culture backlash",
+    time: "14m",
+  },
   { id: "a3", who: "Hunter", what: "promoted", target: "Micro-SaaS side hustles", time: "1h" },
   { id: "a4", who: "You", what: "exported", target: "Ozempic economy script", time: "3h" },
 ];
