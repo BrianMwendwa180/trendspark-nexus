@@ -5,13 +5,16 @@ import { ChevronDown, Copy, Download, Share2, FileText, ArrowLeft, Sparkles } fr
 import toast, { Toaster } from "react-hot-toast";
 import { AppShell } from "@/components/layout/AppShell";
 import { PlatformBadge } from "@/components/dashboard/PlatformBadge";
-import { trends } from "@/lib/mock-data";
+import { getBrief } from "@/lib/api";
 
 export const Route = createFileRoute("/briefs/$id")({
-  loader: ({ params }) => {
-    const trend = trends.find((t) => t.id === params.id);
-    if (!trend) throw notFound();
-    return { trend };
+  loader: async ({ params }) => {
+    try {
+      const trend = await getBrief(params.id);
+      return { trend };
+    } catch (err) {
+      throw notFound();
+    }
   },
   head: ({ loaderData }) => ({
     meta: [

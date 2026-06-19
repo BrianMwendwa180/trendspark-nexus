@@ -6,7 +6,9 @@ import { MetricCard } from "@/components/dashboard/MetricCard";
 import { TrendCard } from "@/components/dashboard/TrendCard";
 import { GrowthChart } from "@/components/charts/GrowthChart";
 import { PageHeader } from "@/components/ui-bits/PageHeader";
-import { metrics, trends, activity } from "@/lib/mock-data";
+import { useQuery } from "@tanstack/react-query";
+import { getTrends } from "@/lib/api";
+import { metrics, activity } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,6 +24,21 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
+  const { data: trends = [], isLoading } = useQuery({
+    queryKey: ["trends"],
+    queryFn: getTrends,
+  });
+
+  if (isLoading || trends.length === 0) {
+    return (
+      <AppShell>
+        <div className="flex h-[50vh] items-center justify-center text-sm text-muted-foreground">
+          Loading dashboard...
+        </div>
+      </AppShell>
+    );
+  }
+
   return (
     <AppShell>
       {/* Hero banner */}

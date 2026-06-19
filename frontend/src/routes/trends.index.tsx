@@ -3,7 +3,8 @@ import { Search, Filter } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/ui-bits/PageHeader";
 import { TrendCard } from "@/components/dashboard/TrendCard";
-import { trends } from "@/lib/mock-data";
+import { useQuery } from "@tanstack/react-query";
+import { getTrends } from "@/lib/api";
 
 export const Route = createFileRoute("/trends/")({
   head: () => ({
@@ -19,6 +20,11 @@ export const Route = createFileRoute("/trends/")({
 });
 
 function TrendsPage() {
+  const { data: trends = [], isLoading } = useQuery({
+    queryKey: ["trends"],
+    queryFn: getTrends,
+  });
+
   return (
     <AppShell>
       <PageHeader
@@ -65,9 +71,13 @@ function TrendsPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {trends.map((t, i) => (
-          <TrendCard key={t.id} trend={t} index={i} />
-        ))}
+        {isLoading ? (
+          <div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            Loading live trends...
+          </div>
+        ) : (
+          trends.map((t, i) => <TrendCard key={t.id} trend={t} index={i} />)
+        )}
       </div>
 
       <p className="mt-6 text-center text-xs text-muted-foreground">
