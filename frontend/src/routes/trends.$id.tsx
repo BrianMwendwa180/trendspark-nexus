@@ -58,18 +58,18 @@ function TrendDetail() {
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
         <div>
           <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            <span className="live-pulse-dot" /> {trend.category} · detected {trend.detectedAt}
+            <span className="live-pulse-dot" /> {trend.source} · detected {new Date(trend.detectedAt).toLocaleDateString()}
           </div>
           <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            <span className="text-3xl">{trend.emoji}</span> {trend.title}
+            {trend.trend_name}
           </h1>
           <div className="mt-3 flex flex-wrap gap-1.5">
-            {trend.platforms.map((p: any) => (
-              <PlatformBadge key={p} p={p} />
-            ))}
+            <a href={trend.source_url} target="_blank" className="text-xs text-primary hover:underline">
+              View original source
+            </a>
           </div>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            {trend.summary}
+            {trend.description || "No description provided."}
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -139,8 +139,12 @@ function TrendDetail() {
           </section>
 
           <section className="mt-6 grid gap-4 md:grid-cols-2">
-            <Panel title="Why it's trending">{trend.why}</Panel>
-            <Panel title="Entrepreneurship angle">{trend.angle}</Panel>
+            {trend.is_generated && trend.generated_brief && (
+              <>
+                <Panel title="Hook">{trend.generated_brief.hook}</Panel>
+                <Panel title="Angle">{trend.generated_brief.angle}</Panel>
+              </>
+            )}
           </section>
         </div>
 
@@ -184,10 +188,9 @@ function TrendDetail() {
                       className="flex items-center justify-between gap-2 rounded-md p-2 hover:bg-surface"
                     >
                       <span className="flex min-w-0 items-center gap-2">
-                        <span>{t.emoji}</span>
-                        <span className="truncate">{t.title}</span>
+                        <span className="truncate">{t.trend_name}</span>
                       </span>
-                      <span className="font-mono text-[10px] text-success">+{t.growth}%</span>
+                      <span className="font-mono text-[10px] text-success">{t.urgency}</span>
                     </Link>
                   </li>
                 ))}

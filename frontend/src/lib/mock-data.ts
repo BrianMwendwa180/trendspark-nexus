@@ -2,23 +2,20 @@ export type Platform = "Twitter" | "TikTok" | "YouTube" | "Reddit" | "Instagram"
 
 export type Trend = {
   id: string;
-  title: string;
-  emoji: string;
-  platforms: Platform[];
-  growth: number; // %
-  virality: number; // 0-100
-  relevance: number; // 0-100
-  lifeDays: number;
+  trend_name: string;
+  description: string;
+  source_url: string;
+  source: string;
+  traffic_velocity: number;
+  urgency: "High" | "Medium" | "Low";
+  generated_brief?: {
+    hook: string;
+    angle: string;
+    script: string;
+    remix_template: string;
+  };
+  is_generated: boolean;
   detectedAt: string;
-  engagement: number;
-  category: string;
-  summary: string;
-  why: string;
-  angle: string;
-  hook: string;
-  script: string;
-  cta: string;
-  timeline: { t: string; v: number }[];
 };
 
 const mkTimeline = (peak: number) =>
