@@ -50,7 +50,7 @@ function TrendDetail() {
             <span className="text-3xl">{trend.emoji}</span> {trend.title}
           </h1>
           <div className="mt-3 flex flex-wrap gap-1.5">
-            {trend.platforms.map((p) => (
+            {trend.platforms.map((p: any) => (
               <PlatformBadge key={p} p={p} />
             ))}
           </div>
