@@ -14,6 +14,8 @@ import {
 import { useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NotificationsDrawer } from "./NotificationsDrawer";
+import { ThemeToggle } from "../ui/theme-toggle";
+
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -33,7 +35,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-border bg-sidebar lg:flex">
         <div className="flex items-center gap-2 px-5 py-5">
-          <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
+          <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
             <Sparkles className="h-4 w-4" />
           </div>
           <div className="flex flex-col leading-tight">
@@ -94,16 +96,17 @@ export function AppShell({ children }: { children: ReactNode }) {
             </kbd>
           </div>
         </div>
+        <ThemeToggle />
         <button
           onClick={() => setNotifOpen(true)}
-          className="relative grid h-9 w-9 place-items-center rounded-md border border-border bg-surface text-muted-foreground hover:text-foreground"
+          className="relative grid h-9 w-9 place-items-center rounded-md border border-border bg-surface text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           aria-label="Notifications"
         >
           <Bell className="h-4 w-4" />
           <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-destructive ring-2 ring-background" />
         </button>
-        <div className="hidden items-center gap-2 rounded-md border border-border bg-surface px-2 py-1 md:flex">
-          <div className="grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-accent to-primary text-[10px] font-bold text-primary-foreground">
+        <div className="hidden items-center gap-2 rounded-md border border-border bg-surface px-2 py-1 md:flex hover:bg-accent cursor-pointer transition-colors">
+          <div className="grid h-6 w-6 place-items-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
             KZ
           </div>
           <div className="hidden flex-col leading-tight md:flex">

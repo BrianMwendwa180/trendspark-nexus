@@ -15,13 +15,12 @@ export const Route = createFileRoute("/login")({
 function Login() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
-      <div className="absolute inset-0 hero-glow" />
       <div className="grid-bg absolute inset-0 opacity-40" />
       <div className="relative grid min-h-screen lg:grid-cols-2">
         {/* Left: pitch */}
         <div className="hidden flex-col justify-between border-r border-border p-10 lg:flex">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
+            <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
               <Sparkles className="h-4 w-4" />
             </div>
             <div className="leading-tight">
@@ -69,7 +68,7 @@ function Login() {
           >
             <div className="mb-8 lg:hidden">
               <Link to="/" className="flex items-center gap-2">
-                <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
+                <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
                   <Sparkles className="h-4 w-4" />
                 </div>
                 <span className="font-display font-bold">TrendJack Hunter</span>

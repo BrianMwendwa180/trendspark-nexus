@@ -84,7 +84,7 @@ function BriefPage() {
         </div>
 
         <aside className="space-y-4">
-          <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-accent/5 p-5">
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
             <div className="mb-2 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-primary">
               <Sparkles className="h-3 w-3" /> AI confidence
             </div>
