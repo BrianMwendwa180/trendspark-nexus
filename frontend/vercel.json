@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "env": {
+    "NODE_VERSION": "20.x"
+  },
+  "routes": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+      "src": "^/(?!.*\\.).*$",
+      "dest": "/index.html",
+      "status": 200
     }
   ]
 }
