@@ -9,38 +9,153 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TrendsIndexRouteImport } from './routes/trends.index'
+import { Route as SettingsIndexRouteImport } from './routes/settings.index'
+import { Route as SavedIndexRouteImport } from './routes/saved.index'
+import { Route as BriefsIndexRouteImport } from './routes/briefs.index'
+import { Route as AnalyticsIndexRouteImport } from './routes/analytics.index'
+import { Route as TrendsIdRouteImport } from './routes/trends.$id'
+import { Route as BriefsIdRouteImport } from './routes/briefs.$id'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrendsIndexRoute = TrendsIndexRouteImport.update({
+  id: '/trends/',
+  path: '/trends/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedIndexRoute = SavedIndexRouteImport.update({
+  id: '/saved/',
+  path: '/saved/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BriefsIndexRoute = BriefsIndexRouteImport.update({
+  id: '/briefs/',
+  path: '/briefs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsIndexRoute = AnalyticsIndexRouteImport.update({
+  id: '/analytics/',
+  path: '/analytics/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrendsIdRoute = TrendsIdRouteImport.update({
+  id: '/trends/$id',
+  path: '/trends/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BriefsIdRoute = BriefsIdRouteImport.update({
+  id: '/briefs/$id',
+  path: '/briefs/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/briefs/$id': typeof BriefsIdRoute
+  '/trends/$id': typeof TrendsIdRoute
+  '/analytics/': typeof AnalyticsIndexRoute
+  '/briefs/': typeof BriefsIndexRoute
+  '/saved/': typeof SavedIndexRoute
+  '/settings/': typeof SettingsIndexRoute
+  '/trends/': typeof TrendsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/briefs/$id': typeof BriefsIdRoute
+  '/trends/$id': typeof TrendsIdRoute
+  '/analytics': typeof AnalyticsIndexRoute
+  '/briefs': typeof BriefsIndexRoute
+  '/saved': typeof SavedIndexRoute
+  '/settings': typeof SettingsIndexRoute
+  '/trends': typeof TrendsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/briefs/$id': typeof BriefsIdRoute
+  '/trends/$id': typeof TrendsIdRoute
+  '/analytics/': typeof AnalyticsIndexRoute
+  '/briefs/': typeof BriefsIndexRoute
+  '/saved/': typeof SavedIndexRoute
+  '/settings/': typeof SettingsIndexRoute
+  '/trends/': typeof TrendsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/briefs/$id'
+    | '/trends/$id'
+    | '/analytics/'
+    | '/briefs/'
+    | '/saved/'
+    | '/settings/'
+    | '/trends/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/briefs/$id'
+    | '/trends/$id'
+    | '/analytics'
+    | '/briefs'
+    | '/saved'
+    | '/settings'
+    | '/trends'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/briefs/$id'
+    | '/trends/$id'
+    | '/analytics/'
+    | '/briefs/'
+    | '/saved/'
+    | '/settings/'
+    | '/trends/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  BriefsIdRoute: typeof BriefsIdRoute
+  TrendsIdRoute: typeof TrendsIdRoute
+  AnalyticsIndexRoute: typeof AnalyticsIndexRoute
+  BriefsIndexRoute: typeof BriefsIndexRoute
+  SavedIndexRoute: typeof SavedIndexRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
+  TrendsIndexRoute: typeof TrendsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +163,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trends/': {
+      id: '/trends/'
+      path: '/trends'
+      fullPath: '/trends/'
+      preLoaderRoute: typeof TrendsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved/': {
+      id: '/saved/'
+      path: '/saved'
+      fullPath: '/saved/'
+      preLoaderRoute: typeof SavedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/briefs/': {
+      id: '/briefs/'
+      path: '/briefs'
+      fullPath: '/briefs/'
+      preLoaderRoute: typeof BriefsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics/': {
+      id: '/analytics/'
+      path: '/analytics'
+      fullPath: '/analytics/'
+      preLoaderRoute: typeof AnalyticsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trends/$id': {
+      id: '/trends/$id'
+      path: '/trends/$id'
+      fullPath: '/trends/$id'
+      preLoaderRoute: typeof TrendsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/briefs/$id': {
+      id: '/briefs/$id'
+      path: '/briefs/$id'
+      fullPath: '/briefs/$id'
+      preLoaderRoute: typeof BriefsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  BriefsIdRoute: BriefsIdRoute,
+  TrendsIdRoute: TrendsIdRoute,
+  AnalyticsIndexRoute: AnalyticsIndexRoute,
+  BriefsIndexRoute: BriefsIndexRoute,
+  SavedIndexRoute: SavedIndexRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
+  TrendsIndexRoute: TrendsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
