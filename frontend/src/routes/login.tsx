@@ -15,18 +15,19 @@ export const Route = createFileRoute("/login")({
 function Login() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
-      <div className="absolute inset-0 hero-glow" />
       <div className="grid-bg absolute inset-0 opacity-40" />
       <div className="relative grid min-h-screen lg:grid-cols-2">
         {/* Left: pitch */}
         <div className="hidden flex-col justify-between border-r border-border p-10 lg:flex">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
+            <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
               <Sparkles className="h-4 w-4" />
             </div>
             <div className="leading-tight">
               <div className="font-display text-sm font-bold">TrendJack</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Hunter</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Hunter
+              </div>
             </div>
           </Link>
 
@@ -35,12 +36,11 @@ function Login() {
               <span className="live-pulse-dot" /> Real-time intelligence
             </div>
             <h2 className="font-display text-4xl font-bold leading-tight tracking-tight">
-              The AI newsroom for{" "}
-              <span className="text-gradient">entrepreneurs</span>.
+              The AI newsroom for <span className="text-primary">entrepreneurs</span>.
             </h2>
             <p className="mt-4 text-sm text-muted-foreground">
-              See what's trending, why it matters, how long it'll last — and ship a publish-ready brief
-              in one click.
+              See what's trending, why it matters, how long it'll last — and ship a publish-ready
+              brief in one click.
             </p>
             <div className="mt-6 grid grid-cols-3 gap-3">
               {[
@@ -48,9 +48,14 @@ function Login() {
                 { k: "Trends/day", v: "1.2k" },
                 { k: "Accuracy", v: "94%" },
               ].map((s) => (
-                <div key={s.k} className="rounded-lg border border-border bg-card/60 p-3 backdrop-blur">
+                <div
+                  key={s.k}
+                  className="rounded-lg border border-border bg-card/60 p-3 backdrop-blur"
+                >
                   <div className="font-mono text-xl font-semibold">{s.v}</div>
-                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.k}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {s.k}
+                  </div>
                 </div>
               ))}
             </div>
@@ -69,7 +74,7 @@ function Login() {
           >
             <div className="mb-8 lg:hidden">
               <Link to="/" className="flex items-center gap-2">
-                <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
+                <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
                   <Sparkles className="h-4 w-4" />
                 </div>
                 <span className="font-display font-bold">TrendJack Hunter</span>
@@ -77,9 +82,7 @@ function Login() {
             </div>
 
             <h1 className="font-display text-2xl font-bold tracking-tight">Welcome back</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Sign in to see today's hunts.
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Sign in to see today's hunts.</p>
 
             <form
               onSubmit={(e) => {
@@ -139,13 +142,21 @@ function Login() {
                 type="button"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-surface px-4 py-2.5 text-sm hover:border-primary/40"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 11v3.8h5.4c-.2 1.3-1.6 3.9-5.4 3.9-3.2 0-5.9-2.7-5.9-6s2.7-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 4 14.6 3 12 3 6.9 3 2.8 7.1 2.8 12.3S6.9 21.5 12 21.5c6.9 0 9.4-4.9 9.4-7.3 0-.5-.1-.9-.1-1.2H12z"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24">
+                  <path
+                    fill="#EA4335"
+                    d="M12 11v3.8h5.4c-.2 1.3-1.6 3.9-5.4 3.9-3.2 0-5.9-2.7-5.9-6s2.7-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 4 14.6 3 12 3 6.9 3 2.8 7.1 2.8 12.3S6.9 21.5 12 21.5c6.9 0 9.4-4.9 9.4-7.3 0-.5-.1-.9-.1-1.2H12z"
+                  />
+                </svg>
                 Continue with Google
               </button>
             </form>
 
             <p className="mt-6 text-center text-xs text-muted-foreground">
-              Don't have an account? <a className="text-primary hover:underline" href="#">Create one →</a>
+              Don't have an account?{" "}
+              <a className="text-primary hover:underline" href="#">
+                Create one →
+              </a>
             </p>
           </motion.div>
         </div>

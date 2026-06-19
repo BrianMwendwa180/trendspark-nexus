@@ -12,7 +12,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Dashboard · TrendJack Hunter" },
-      { name: "description", content: "Real-time trend intelligence and AI content briefs for entrepreneurs." },
+      {
+        name: "description",
+        content: "Real-time trend intelligence and AI content briefs for entrepreneurs.",
+      },
     ],
   }),
   component: Dashboard,
@@ -35,7 +38,7 @@ function Dashboard() {
               <span className="live-pulse-dot" /> Live · {trends[0].detectedAt}
             </div>
             <h1 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              <span className="text-gradient">{trends[0].title}</span>
+              <span className="text-primary">{trends[0].title}</span>
             </h1>
             <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
               {trends[0].summary}
@@ -93,8 +96,12 @@ function Dashboard() {
               <p className="text-xs text-muted-foreground">Detected trends and AI briefs by hour</p>
             </div>
             <div className="flex items-center gap-3 text-[11px] font-mono text-muted-foreground">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[var(--color-chart-1)]" /> Trends</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[var(--color-chart-2)]" /> Briefs</span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[var(--color-chart-1)]" /> Trends
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[var(--color-chart-2)]" /> Briefs
+              </span>
             </div>
           </div>
           <GrowthChart />
@@ -150,7 +157,9 @@ function Quick({ label, value, accent }: { label: string; value: string; accent?
   return (
     <div className="rounded-lg border border-border bg-background/40 p-3">
       <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
-      <div className={`mt-1 font-mono text-lg font-semibold ${accent ? "text-accent" : ""}`}>{value}</div>
+      <div className={`mt-1 font-mono text-lg font-semibold ${accent ? "text-accent" : ""}`}>
+        {value}
+      </div>
     </div>
   );
 }

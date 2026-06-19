@@ -78,13 +78,19 @@ function BriefPage() {
 
           <div className="mt-6 space-y-3">
             {sections.map((s, i) => (
-              <Collapsible key={s.key} title={s.label} tone={s.tone} body={s.body} defaultOpen={i < 2} />
+              <Collapsible
+                key={s.key}
+                title={s.label}
+                tone={s.tone}
+                body={s.body}
+                defaultOpen={i < 2}
+              />
             ))}
           </div>
         </div>
 
         <aside className="space-y-4">
-          <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-accent/5 p-5">
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
             <div className="mb-2 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-primary">
               <Sparkles className="h-3 w-3" /> AI confidence
             </div>
@@ -99,10 +105,26 @@ function BriefPage() {
               Actions
             </h3>
             <div className="flex flex-col gap-2">
-              <ActionBtn icon={<Copy className="h-4 w-4" />} label="Copy full brief" onClick={() => toast.success("Brief copied to clipboard")} />
-              <ActionBtn icon={<Download className="h-4 w-4" />} label="Export PDF" onClick={() => toast.success("Exporting PDF…")} />
-              <ActionBtn icon={<Download className="h-4 w-4" />} label="Export DOCX" onClick={() => toast.success("Exporting DOCX…")} />
-              <ActionBtn icon={<Share2 className="h-4 w-4" />} label="Share link" onClick={() => toast.success("Share link copied")} />
+              <ActionBtn
+                icon={<Copy className="h-4 w-4" />}
+                label="Copy full brief"
+                onClick={() => toast.success("Brief copied to clipboard")}
+              />
+              <ActionBtn
+                icon={<Download className="h-4 w-4" />}
+                label="Export PDF"
+                onClick={() => toast.success("Exporting PDF…")}
+              />
+              <ActionBtn
+                icon={<Download className="h-4 w-4" />}
+                label="Export DOCX"
+                onClick={() => toast.success("Exporting DOCX…")}
+              />
+              <ActionBtn
+                icon={<Share2 className="h-4 w-4" />}
+                label="Share link"
+                onClick={() => toast.success("Share link copied")}
+              />
             </div>
           </div>
 
@@ -158,7 +180,9 @@ function Collapsible({
             className="overflow-hidden"
           >
             <div className="border-t border-border px-5 py-4">
-              <p className="whitespace-pre-line text-sm leading-relaxed text-foreground/90">{body}</p>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-foreground/90">
+                {body}
+              </p>
               <div className="mt-3 flex justify-end">
                 <button
                   onClick={() => {
@@ -178,7 +202,15 @@ function Collapsible({
   );
 }
 
-function ActionBtn({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick: () => void }) {
+function ActionBtn({
+  icon,
+  label,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={onClick}
