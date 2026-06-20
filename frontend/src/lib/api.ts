@@ -1,6 +1,6 @@
 import { Trend } from './mock-data';
 
-const API_URL = '/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://trendspark-nexus.onrender.com/api';
 
 export async function getTrends(): Promise<Trend[]> {
   const res = await fetch(`${API_URL}/trends`);
