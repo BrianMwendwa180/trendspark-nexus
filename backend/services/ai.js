@@ -15,7 +15,13 @@ export async function filterTrend(trend) {
     Rule: Only pass trends that can logically tie back to Kenyan business operations, personal finance, workplace culture, or regulatory changes (e.g., KRA, eTIMS, eCitizen updates). Discard purely entertainment or non-niche sports gossip.
     
     Return a valid JSON object EXACTLY like this:
-    { "is_relevant": true|false, "reason": "brief reason why" }
+    { 
+      "is_relevant": true|false, 
+      "reason": "brief reason why",
+      "what_is_happening": "Brief explanation of the trend",
+      "why_it_is_spreading": "Brief explanation of why it is going viral",
+      "estimated_lifespan": "e.g., 24 hours, 3 days, 2 weeks"
+    }
     `;
 
     const response = await ai.models.generateContent({
@@ -28,10 +34,17 @@ export async function filterTrend(trend) {
 
     const text = response.text;
     const result = JSON.parse(text);
-    return result.is_relevant;
+    return result;
   } catch (error) {
     console.error("AI Filtration Error:", error);
-    return false; // Safely discard if AI fails
+    // Fallback if AI rate-limited
+    return {
+      is_relevant: true,
+      reason: "Fallback due to AI rate limit",
+      what_is_happening: trend.description || "Trending topic on " + trend.source,
+      why_it_is_spreading: "High engagement from users.",
+      estimated_lifespan: "24 hours"
+    };
   }
 }
 

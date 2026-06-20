@@ -41,11 +41,24 @@ function Dashboard() {
     });
   };
 
-  if (isLoading || trends.length === 0) {
+  if (isLoading) {
     return (
       <AppShell>
         <div className="flex h-[50vh] items-center justify-center text-sm text-muted-foreground">
           Loading dashboard...
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (trends.length === 0) {
+    return (
+      <AppShell>
+        <div className="flex h-[50vh] flex-col items-center justify-center gap-4 text-sm text-muted-foreground">
+          <p>No trends found in the database.</p>
+          <button onClick={handleIngest} className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
+            Run AI Ingestion
+          </button>
         </div>
       </AppShell>
     );
@@ -166,9 +179,12 @@ function Dashboard() {
               <button className="inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-3 py-2 text-xs hover:border-primary/40">
                 <Filter className="h-3.5 w-3.5" /> Filter
               </button>
-              <button onClick={handleIngest} className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90">
+              <button onClick={handleIngest} className="inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-3 py-2 text-xs hover:border-primary/40">
                 <Plus className="h-3.5 w-3.5" /> Run AI Ingestion
               </button>
+              <Link to="/submit" className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90">
+                <Plus className="h-3.5 w-3.5" /> Submit Bounty
+              </Link>
             </>
           }
         />

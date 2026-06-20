@@ -19,8 +19,8 @@ export const Route = createFileRoute("/briefs/$id")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `Brief · ${loaderData?.trend.title}` },
-      { name: "description", content: loaderData?.trend.hook },
+      { title: `Brief · ${loaderData?.trend.trend_name}` },
+      { name: "description", content: loaderData?.trend.description },
     ],
   }),
   notFoundComponent: () => (

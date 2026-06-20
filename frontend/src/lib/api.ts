@@ -37,3 +37,14 @@ export async function triggerIngestion(): Promise<any> {
   if (!res.ok) throw new Error('Failed to ingest trends');
   return res.json();
 }
+
+export async function submitTrend(data: { trend_name: string; description: string; source_url: string; submitterAddress: string }): Promise<Trend> {
+  const res = await fetch(`${API_URL}/trends/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || 'Failed to submit trend');
+  return json.trend;
+}
