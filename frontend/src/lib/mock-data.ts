@@ -14,8 +14,13 @@ export type Trend = {
     script: string;
     remix_template: string;
   };
+  submitterAddress?: string;
+  rewardStatus?: "PENDING" | "PAID" | "FAILED";
+  transactionHash?: string;
+  rewardAmount?: string;
   is_generated: boolean;
   detectedAt: string;
+  [key: string]: any;
 };
 
 const mkTimeline = (peak: number) =>
@@ -24,10 +29,10 @@ const mkTimeline = (peak: number) =>
     v: Math.max(2, Math.round(peak * Math.exp(-Math.pow((i - 8) / 3.2, 2)) + Math.random() * 6)),
   }));
 
-export const trends: Trend[] = [
+export const trends: Partial<Trend>[] = [
   {
     id: "ai-replacing-junior-devs",
-    title: "AI is replacing junior developers",
+    trend_name: "AI is replacing junior developers",
     emoji: "🤖",
     platforms: ["Twitter", "TikTok", "YouTube"],
     growth: 290,
@@ -50,7 +55,7 @@ export const trends: Trend[] = [
   },
   {
     id: "hustle-culture-backlash",
-    title: "Hustle culture backlash from Gen Z",
+    trend_name: "Hustle culture backlash from Gen Z",
     emoji: "🛑",
     platforms: ["TikTok", "Instagram", "Reddit"],
     growth: 184,
@@ -73,7 +78,7 @@ export const trends: Trend[] = [
   },
   {
     id: "micro-saas-side-hustles",
-    title: "Micro-SaaS as the new side hustle",
+    trend_name: "Micro-SaaS as the new side hustle",
     emoji: "💸",
     platforms: ["Twitter", "YouTube", "LinkedIn"],
     growth: 142,
@@ -96,7 +101,7 @@ export const trends: Trend[] = [
   },
   {
     id: "ozempic-economy",
-    title: "The Ozempic economy reshaping CPG",
+    trend_name: "The Ozempic economy reshaping CPG",
     emoji: "💊",
     platforms: ["Twitter", "LinkedIn", "Reddit"],
     growth: 121,
@@ -119,7 +124,7 @@ export const trends: Trend[] = [
   },
   {
     id: "ai-girlfriend-apps",
-    title: "AI companion apps hit mainstream",
+    trend_name: "AI companion apps hit mainstream",
     emoji: "💬",
     platforms: ["TikTok", "Twitter", "Reddit"],
     growth: 96,
@@ -142,7 +147,7 @@ export const trends: Trend[] = [
   },
   {
     id: "vibe-coding",
-    title: "'Vibe coding' enters the chat",
+    trend_name: "'Vibe coding' enters the chat",
     emoji: "🎧",
     platforms: ["Twitter", "YouTube"],
     growth: 88,

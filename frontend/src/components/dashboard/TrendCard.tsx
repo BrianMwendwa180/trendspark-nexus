@@ -35,6 +35,19 @@ export function TrendCard({ trend, index = 0 }: { trend: Trend; index?: number }
         </div>
       </div>
 
+      {trend.transactionHash && (
+        <div className="mt-3">
+          <a 
+            href={`https://testnet.snowtrace.io/tx/${trend.transactionHash}`} 
+            target="_blank" 
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md bg-green-500/10 px-2.5 py-1 text-xs font-medium text-green-600 hover:bg-green-500/20"
+          >
+            ✅ Rewarded {trend.rewardAmount || '0.01'} AVAX (View Tx)
+          </a>
+        </div>
+      )}
+
       <div className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4">
         <Stat
           icon={<Target className="h-3 w-3" />}

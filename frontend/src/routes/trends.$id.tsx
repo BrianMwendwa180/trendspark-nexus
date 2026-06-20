@@ -27,8 +27,8 @@ export const Route = createFileRoute("/trends/$id")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.trend.title} · TrendJack Hunter` },
-      { name: "description", content: loaderData?.trend.summary },
+      { title: `${loaderData?.trend.trend_name} · TrendJack Hunter` },
+      { name: "description", content: loaderData?.trend.description },
     ],
   }),
   notFoundComponent: () => (
@@ -157,18 +157,25 @@ function TrendDetail() {
             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
               <Mini label="Growth" value={`+${trend.growth}%`} />
               <Mini label="Relevance" value={`${trend.relevance}%`} />
-              <Mini label="Life" value={`${trend.lifeDays}d`} />
+              <Mini label="Life" value={trend.estimated_lifespan || `${trend.lifeDays}d`} />
             </div>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
             <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              AI explanation
+              What is happening
             </h3>
             <p className="text-sm leading-relaxed text-foreground/90">
-              Multi-platform amplification combined with high-emotion narrative framing is driving
-              compounding engagement. Recommend acting within {trend.lifeDays} days for maximum
-              lift.
+              {trend.what_is_happening || "No context provided."}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+            <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              Why it's spreading
+            </h3>
+            <p className="text-sm leading-relaxed text-foreground/90">
+              {trend.why_it_is_spreading || "No context provided."}
             </p>
           </div>
 
@@ -178,9 +185,9 @@ function TrendDetail() {
             </h3>
             <ul className="space-y-2 text-sm">
               {allTrends
-                .filter((t) => t.id !== trend.id)
+                .filter((t: any) => t.id !== trend.id)
                 .slice(0, 3)
-                .map((t) => (
+                .map((t: any) => (
                   <li key={t.id}>
                     <Link
                       to="/trends/$id"
