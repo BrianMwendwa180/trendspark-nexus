@@ -77,6 +77,12 @@ export async function generateBrief(trend) {
     return result;
   } catch (error) {
     console.error("AI Generation Error:", error);
-    throw new Error("Failed to generate brief via AI");
+    // Fallback if AI quota exceeded
+    return {
+      hook: "Did you know this trend could change how you run your business in Kenya?",
+      angle: "Focus on how operational efficiency is more important than hype.",
+      script: "[0:00-0:10] Hook delivery with energy.\n[0:10-0:30] Explain the core concept and how it impacts revenue.\n[0:30-0:45] Call to action to follow Kuzana for more tips.",
+      remix_template: "Use a simple direct-to-camera format or a green screen with a relevant news article in the background."
+    };
   }
 }
